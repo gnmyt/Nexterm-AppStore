@@ -4,7 +4,7 @@ services:
     ports:
       - "6989:6989"
     volumes:
-      - nexterm:/app/data
+      - ./data:/app/data
     restart: unless-stopped
 
 x-nexterm:
