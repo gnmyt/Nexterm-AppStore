@@ -1,0 +1,79 @@
+name: App CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate-nexterm-files:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - uses: KengoTODA/actions-setup-docker-compose@v1
+        with:
+          version: '2.14.2'
+
+      - name: Validate .nexterm.yml files structure
+        run: |
+          files=$(find . -type f -name "*.nexterm.yml")
+
+          if [ -z "$files" ]; then
+            echo "No .nexterm.yml files found!"
+            exit 1
+          fi
+
+          for file in $files; do
+            echo "Validating $file..."
+          
+            if ! grep -q 'x-nexterm:' "$file"; then
+              echo "x-nexterm section is missing in $file!"
+              exit 1
+            fi
+            if ! grep -q 'name:' "$file"; then
+              echo "name field is missing in x-nexterm of $file!"
+              exit 1
+            fi
+            if ! grep -q 'version:' "$file"; then
+              echo "version field is missing in x-nexterm of $file!"
+              exit 1
+            fi
+            if ! grep -q 'description:' "$file"; then
+              echo "description field is missing in x-nexterm of $file!"
+              exit 1
+            fi
+            if ! grep -q 'icon:' "$file"; then
+              echo "icon field is missing in x-nexterm of $file!"
+              exit 1
+            fi
+            if ! grep -q 'category:' "$file"; then
+              echo "category field is missing in x-nexterm of $file!"
+              exit 1
+            fi
+            if ! grep -q 'port:' "$file"; then
+              echo "port field is missing in x-nexterm of $file!"
+              exit 1
+            fi
+
+            echo "$file structure is valid!"
+          done
+
+      - name: Test Docker Compose configuration
+        run: |
+            files=$(find . -type f -name "*.nexterm.yml")
+
+            for file in $files; do
+                echo "Testing $file..."
+                docker compose -f $file config > /dev/null
+                if [ $? -ne 0 ]; then
+                    echo "$file is invalid!"
+                    exit 1
+                fi
+                echo "$file is valid!"
+            done
