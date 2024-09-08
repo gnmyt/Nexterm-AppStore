@@ -1,0 +1,16 @@
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1.23.13
+    restart: always
+    ports:
+      - 3001:3001
+    volumes:
+      - ./data:/app/data
+
+x-nexterm:
+  name: Uptime Kuma
+  version: 1.23.13
+  description: Uptime Kuma is an easy-to-use self-hosted monitoring tool
+  icon: https://raw.githubusercontent.com/gnmyt/Nexterm-AppStore/main/logos/UptimeKuma.png
+  category: Networking
+  port: 3001
