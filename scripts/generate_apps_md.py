@@ -10,11 +10,11 @@ def read_nexterm_metadata(file_path):
     return data.get('x-nexterm', {})
 
 def generate_markdown_table(apps_metadata):
-    header = "| Name | Version | Description | Port | Category | Icon |\n"
+    header = "| Icon | Name | Version | Description | Port | Category |\n"
     separator = "|------|---------|-------------|------|----------|------|\n"
     rows = []
     for app in apps_metadata:
-        row = f"| {app['name']} | {app['version']} | {app['description']} | {app['port']} | {app['category']} | ![icon]({app['icon']}) |\n"
+        row = f"| ![icon]({app['icon']}) | {app['name']} | {app['version']} | {app['description']} | {app['port']} | {app['category']} |\n"
         rows.append(row)
     return header + separator + ''.join(rows)
 
