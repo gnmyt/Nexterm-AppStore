@@ -7,8 +7,8 @@ services:
     image: gitea/gitea:1.22.2
     container_name: gitea
     environment:
-      - USER_UID={USER_UID}
-      - USER_GID={USER_GID}
+      - USER_UID=1000
+      - USER_GID=1000
       - GITEA__database__DB_TYPE=mysql
       - GITEA__database__HOST=db:3306
       - GITEA__database__NAME=gitea
@@ -45,6 +45,5 @@ x-nexterm:
   version: 1.22.2
   description: Private, Fast, Reliable DevOps Platform
   icon: https://raw.githubusercontent.com/gnmyt/Nexterm-AppStore/main/logos/Gitea.png
-  preInstallCommand: sed -i 's/{USER_UID}/$(id -u)/g' {appPath}/docker-compose.yml && sed -i 's/{USER_GID}/$(id -g)/g' {appPath}/docker-compose.yml
   category: Development
   port: 3000
