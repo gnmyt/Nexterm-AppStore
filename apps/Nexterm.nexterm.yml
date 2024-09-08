@@ -1,0 +1,16 @@
+services:
+  app:
+    image: germannewsmaker/nexterm:1.0.1-OPEN-PREVIEW
+    ports:
+      - "6989:6989"
+    volumes:
+      - nexterm:/app/data
+    restart: unless-stopped
+
+x-nexterm:
+  name: Nexterm
+  version: 1.0.1
+  description: The open source server management software for SSH, VNC & RDP
+  icon: https://raw.githubusercontent.com/gnmyt/Nexterm-AppStore/main/logos/Nexterm.png
+  category: Networking
+  port: 6989
