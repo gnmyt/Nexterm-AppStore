@@ -1,0 +1,16 @@
+services:
+  app:
+    image: germannewsmaker/myspeed:1.0.9
+    ports:
+      - "5216:5216"
+    volumes:
+      - ./data:/myspeed/data
+    restart: unless-stopped
+
+x-nexterm:
+  name: MySpeed
+  version: 1.0.9
+  description: Speed test analysis software that records your internet speed for up to 30 days.
+  icon: https://raw.githubusercontent.com/gnmyt/Nexterm-AppStore/main/logos/MySpeed.png
+  category: Networking
+  port: 5216
